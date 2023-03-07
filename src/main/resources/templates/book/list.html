@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
 <head>
   <meta charset="UTF-8">
   <title>My Book List</title>
@@ -8,7 +8,6 @@
 <body>
 <th:block th:replace="layout :: header"></th:block>
 <div class="container">
-  <h1 th:text="${title}"></h1>
   <table id="myTable" class="table display">
     <thead>
     <tr>
@@ -26,14 +25,13 @@
       <td th:text="${book[1]}"></td>
       <td th:text="${book[2]}"></td>
       <td th:text="${book[3]}"></td>
-      <td th:text="${book[4]}"></td>
+      <td th:text="${book[4] == null ? 'N/A' : book[4]}"></td>
       <td>
-        <a th:href="@{/books/edit/{id}(id=${book[0]})}">Edit</a> |
-        <a th:href="@{/books/delete/{id}(id=${book[0]})}"
+        <a th:href="@{/books/edit(id=__${book[0]}__)}">Edit</a>
+        <a th:href="@{/books/delete(id=__${book[0]}__)}"
            onclick="return confirm('Are you sure?')">Delete</a>
       </td>
     </tbody>
-    </tr>
   </table>
 </div>
 

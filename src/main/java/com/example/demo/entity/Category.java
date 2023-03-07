@@ -17,7 +17,7 @@ public class Category {
     private Long id;
 
     @Column(name = "name", length = 50)
-    @Max(value = 50, message = "Name must be less than 50 characters")
+    @Size(max = 50, message = "Name must be less than 50 characters")
     @NotNull(message = "Name must not be null")
     private String name;
 

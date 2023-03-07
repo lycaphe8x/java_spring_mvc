@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
 <head>
   <meta charset="UTF-8">
   <title>My App</title>
@@ -9,7 +9,7 @@
 <header th:fragment="header">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">HUTECH</a>
+      <a class="navbar-brand" href="/">HUTECH</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
               data-bs-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent"
@@ -28,9 +28,7 @@
     </div>
   </nav>
 </header>
-<div th:insert="~{::${content}}">
-<!--  NỘI DUNG TRANG CON-->
-</div>
+
 <footer th:fragment="footer">
   <script th:src="@{/js/bootstrap.min.js}"></script>
 </footer>

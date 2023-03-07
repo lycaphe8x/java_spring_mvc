@@ -11,11 +11,11 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "title", length = 50)
-    @Max(value = 50, message = "Title must be less than 50 characters")
+    @Size(max = 50, message = "Title must be less than 50 characters")
     @NotNull(message = "Title must not be null")
     private String title;
     @Column(name = "author", length = 50)
-    @Max(value = 50, message = "Author must be less than 50 characters")
+    @Size(max = 50, message = "Author must be less than 50 characters")
     private String author;
 
     @Column(name = "price")
@@ -23,8 +23,7 @@ public class Book {
     @Positive(message = "Price must be greater than 0")
     private Double price;
 
-    @ManyToOne(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id",
             insertable = false,
             updatable = false,
