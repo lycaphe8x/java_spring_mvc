@@ -15,7 +15,6 @@
       <th>Title</th>
       <th>Author</th>
       <th>Price</th>
-      <th>Category</th>
       <th>Action</th>
     </tr>
     <tr th:each="book : ${books}">
@@ -23,7 +22,6 @@
       <td th:text="${book.title}"></td>
       <td th:text="${book.author}"></td>
       <td th:text="${book.price}"></td>
-      <td th:text="${book.category}"></td>
       <td>
         <a th:href="@{/books/edit/{id}(id=${book.id})}">Edit</a> |
         <a th:href="@{/books/delete/{id}(id=${book.id})}"
