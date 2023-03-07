@@ -1,8 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Book;
-import com.example.demo.services.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.services.BookStoreService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +12,15 @@ import java.util.List;
 @Controller
 @RequestMapping("/books")
 public class BookController {
-    @Autowired
-    private BookService bookService;
+    private final BookStoreService bookStoreService;
+
+    public BookController(BookStoreService bookStoreService) {
+        this.bookStoreService = bookStoreService;
+    }
 
     @GetMapping
     public String showAllBooks(Model model) {
-        List<Object[]> books = bookService.getAllBooks();
+        List<Object[]> books = bookStoreService.getAllBooks();
         model.addAttribute("books", books);
         return "book/list";
     }
@@ -26,9 +28,16 @@ public class BookController {
     @GetMapping("/add")
     public String addBook(Model model) {
         model.addAttribute("book", new Book());
+        model.addAttribute("categories", bookStoreService.getAllCategories());
         return "book/add";
     }
 
+    @GetMapping("/edit")
+    public String editBook(Model model) {
+        model.addAttribute("book", new Book());
+        model.addAttribute("categories", bookStoreService.getAllCategories());
+        return "book/edit";
+    }
 }
 
 

@@ -28,7 +28,9 @@
         </div>
         <div class="col-6 mb-3">
             <label class="form-label" for="category">Category:</label>
-            <input class="form-control" type="text" th:field="*{category}" id="category">
+            <select class="form-select" th:field="*{category}" id="category">
+                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+            </select>
         </div>
         <input type="submit" class="btn btn-primary" value="Save">
     </form>
