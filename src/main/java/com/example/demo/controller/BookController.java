@@ -1,8 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Book;
-import com.example.demo.repository.BookRepository;
-import com.example.demo.repository.CategoryRepository;
 import com.example.demo.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,15 +17,11 @@ public class BookController {
 
     @GetMapping
     public String showAllBooks(Model model) {
-        try {
-            List<Book> books = bookService.getAllBooks();
-            model.addAttribute("books", books);
-            return "book/list";
-        }catch (Exception e) {
-            e.printStackTrace();
-            return "error";
-        }
+        List<Object[]> books = bookService.getAllBooks();
+        model.addAttribute("books", books);
+        return "book/list";
     }
+
 }
 
 

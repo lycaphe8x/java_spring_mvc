@@ -8,25 +8,31 @@
 <body>
 <th:block th:replace="layout :: header"></th:block>
 <div class="container">
-  <h1 th:text=${title}></h1>
-  <table class="table">
+  <h1 th:text="${title}"></h1>
+  <table id="myTable" class="table display">
+    <thead>
     <tr>
       <th>ID</th>
       <th>Title</th>
       <th>Author</th>
       <th>Price</th>
+      <th>Category</th>
       <th>Action</th>
     </tr>
+    </thead>
+    <tbody>
     <tr th:each="book : ${books}">
-      <td th:text="${book.id}"></td>
-      <td th:text="${book.title}"></td>
-      <td th:text="${book.author}"></td>
-      <td th:text="${book.price}"></td>
+      <td th:text="${book[0]}"></td>
+      <td th:text="${book[1]}"></td>
+      <td th:text="${book[2]}"></td>
+      <td th:text="${book[3]}"></td>
+      <td th:text="${book[4]}"></td>
       <td>
-        <a th:href="@{/books/edit/{id}(id=${book.id})}">Edit</a> |
-        <a th:href="@{/books/delete/{id}(id=${book.id})}"
+        <a th:href="@{/books/edit/{id}(id=${book[0]})}">Edit</a> |
+        <a th:href="@{/books/delete/{id}(id=${book[0]})}"
            onclick="return confirm('Are you sure?')">Delete</a>
       </td>
+    </tbody>
     </tr>
   </table>
 </div>
