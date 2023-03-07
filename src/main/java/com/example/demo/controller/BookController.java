@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Book;
 import com.example.demo.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,12 @@ public class BookController {
         List<Object[]> books = bookService.getAllBooks();
         model.addAttribute("books", books);
         return "book/list";
+    }
+
+    @GetMapping("/add")
+    public String addBook(Model model) {
+        model.addAttribute("book", new Book());
+        return "book/add";
     }
 
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
 <head>
     <meta charset="UTF-8">
     <th:block th:replace="layout :: link-css"></th:block>
@@ -11,7 +11,7 @@
     <h1>Add Book</h1>
     <form th:action="@{/books/add}" th:object="${book}" method="post">
         <div class="col-6 mb-3">
-            <label class="form-label" for="title">Id:</label>
+            <label class="form-label" for="id">Id:</label>
             <input class="form-control" type="text" th:field="*{id}" id="id">
         </div>
         <div class="col-6 mb-3">
