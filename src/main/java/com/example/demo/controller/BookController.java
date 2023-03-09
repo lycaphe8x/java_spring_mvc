@@ -41,8 +41,7 @@ public class BookController {
 
     @PostMapping("/save")
     public String saveBook(@Valid @ModelAttribute("book") Book book,  BindingResult bindingResult, Model model) {
-        System.out.println(book.getCategory().getId());
-        if (bindingResult.hasErrors()) {
+        if (bindingResult != null && bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors().get(0).getDefaultMessage());
             return "book/add";
         }
