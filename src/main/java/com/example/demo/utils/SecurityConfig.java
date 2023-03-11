@@ -33,27 +33,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/css/**", "/js/**").permitAll()
-                .and()
-                .authorizeHttpRequests()
-                .requestMatchers("/").permitAll()
-                .and()
-                .authorizeHttpRequests()
-                .requestMatchers("/books/**").authenticated()
-                .and()
-                .authorizeHttpRequests()
-                .requestMatchers("/users/**").permitAll()
-                .and()
-                .logout()
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutUrl("/users/logout")
-                .logoutSuccessUrl("/users/login")
-                .permitAll()
-                .and()
-                .formLogin()
-                .and().build();
+                .authorizeHttpRequests((auth) -> auth.requestMatchers("/css/**", "/js/**").permitAll()
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/books/**").authenticated()
+                        .requestMatchers("/users/**").permitAll()
+                )
+                .logout((logout) -> logout.logoutUrl("/users/logout")
+                        .logoutSuccessUrl("/users/login")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .permitAll()
+                )
+                .formLogin(/*(formLogin) -> formLogin.loginPage("/users/login")
+                        .loginProcessingUrl("/users/login")
+                        .defaultSuccessUrl("/books")
+                        .permitAll()*/
+                ).and().build();
     }
 
     @Bean
