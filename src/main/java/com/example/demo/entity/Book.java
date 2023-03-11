@@ -23,11 +23,15 @@ public class Book {
     @Positive(message = "Price must be greater than 0")
     private Double price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "category_id",
-            insertable = false,
-            updatable = false,
             referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "FK_SACH_LOAISACH"))
+            foreignKey = @ForeignKey(name = "FK_SACH_LOAISACH"))
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_SACH_NXB"))
+    private User user;
 }

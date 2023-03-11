@@ -21,8 +21,6 @@ public class Category {
     @NotNull(message = "Name must not be null")
     private String name;
 
-    @OneToMany(mappedBy = "category",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category")
     private List<Book> books = new ArrayList<>();
 }

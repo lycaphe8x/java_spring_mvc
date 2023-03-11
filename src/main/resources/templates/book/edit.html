@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="vi">
 <head>
     <meta charset="UTF-8">
-    <th:block th:replace="layout :: link-css"></th:block>
+    <th:block th:replace="~{layout :: link-css}"></th:block>
     <title>Edit Book</title>
 </head>
 <body>
-<th:block th:replace="layout :: header"></th:block>
+<th:block th:replace="~{layout :: header}"></th:block>
 <div class="container">
     <h1>Edit Book</h1>
     <form th:action="@{/books/edit}" th:object="${book}" method="post">
@@ -32,6 +32,6 @@
     <br>
     <a th:href="@{/books}">Back to List</a>
 </div>
-<th:block th:replace="layout :: footer"></th:block>
+<th:block th:replace="~{layout :: footer}"></th:block>
 </body>
 </html>
