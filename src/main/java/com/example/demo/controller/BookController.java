@@ -36,18 +36,18 @@ public class BookController {
         return "book/add";
     }
 
-    @GetMapping(value = "/delete", params = "id")
-    public String deleteBook(@RequestParam("id") Long id) {
-        bookService.deleteBook(id);
-        return "redirect:/books";
-    }
-
     @GetMapping("/edit")
     public String editBook(@RequestParam("id") Long id, Model model) {
         Book book = bookService.getBookById(id);
         model.addAttribute("book", book);
         model.addAttribute("categories", categoryService.getAllCategories());
         return "book/edit";
+    }
+
+    @GetMapping(value = "/delete", params = "id")
+    public String deleteBook(@RequestParam("id") Long id) {
+        bookService.deleteBook(id);
+        return "redirect:/books";
     }
 
     @PostMapping("/save")
@@ -65,7 +65,7 @@ public class BookController {
         }
 
         bookService.addBook(book);
-        redirectAttributes.addFlashAttribute("message", "The book was saved successfully.");
+        redirectAttributes.addFlashAttribute("message", "Book saved successfully");
         return "redirect:/books";
     }
 }

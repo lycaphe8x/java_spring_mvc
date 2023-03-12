@@ -22,7 +22,7 @@
       <td th:text="${book.title}"></td>
       <td th:text="${book.author}"></td>
       <td th:text="${book.price}"></td>
-      <td th:text="${book.category.name}"></td>
+      <td th:text="${book.category != null ? book.category.name : 'N/A'}"></td>
       <td>
         <a th:href="@{/books/edit(id=__${book.id}__)}" class="text-info">Edit</a> |
         <a th:href="@{/books/delete(id=__${book.id}__)}"
