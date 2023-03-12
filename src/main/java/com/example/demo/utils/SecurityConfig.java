@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
@@ -45,14 +45,20 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout.logoutUrl("/logout")
                         .logoutSuccessUrl("/login")
+                        .deleteCookies("JSESSIONID")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .permitAll()
                 )
                 .formLogin(formLogin -> formLogin.loginPage("/login")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/books")
+                        .defaultSuccessUrl("/")
                         .permitAll()
-                ).build();
+                )
+                .rememberMe(rememberMe -> rememberMe.key("uniqueAndSecret")
+                        .tokenValiditySeconds(86400)
+                        .userDetailsService(userDetailsService())
+                )
+                .build();
     }
 }

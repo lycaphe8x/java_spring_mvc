@@ -31,9 +31,15 @@ public class UserController {
         return "user/register";
     }
 
+    @GetMapping("/authorize")
+    public String authorize(Model model) {
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+        return "user/authorize";
+    }
+
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
-        System.out.println(bindingResult.hasErrors());
         if (bindingResult.hasErrors()) {
             List<FieldError> errors = bindingResult.getFieldErrors();
             for (FieldError error : errors) {
