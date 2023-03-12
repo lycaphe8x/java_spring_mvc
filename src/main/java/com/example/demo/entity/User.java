@@ -21,6 +21,7 @@ public class User {
     private String username;
 
     @Column(name = "password", length = 250)
+    @NotNull(message = "Password must not be null")
     private String password;
 
     @Column(name = "isLocked"

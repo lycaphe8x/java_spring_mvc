@@ -33,10 +33,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/css/**", "/js/**").permitAll()
-                        .requestMatchers("/").permitAll()
+                .authorizeHttpRequests(auth -> auth.requestMatchers( "/css/**", "/js/**", "/", "/register").permitAll()
+                        .anyRequest().permitAll()
                         .requestMatchers("/books/**").authenticated()
-                        .requestMatchers("/users/**").permitAll()
                 )
                 .logout(logout -> logout.logoutUrl("/logout")
                         .logoutSuccessUrl("/login")
