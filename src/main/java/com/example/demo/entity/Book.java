@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.utils.ValidCategoryId;
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.*;
@@ -25,6 +26,7 @@ public class Book {
     private Double price;
 
     @ManyToOne
-    @JoinColumn(columnDefinition="integer", name="category_id")
+    @JoinColumn(name = "category_id")
+    @ValidCategoryId
     private Category category;
 }
