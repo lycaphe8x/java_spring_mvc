@@ -33,22 +33,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
-                .authorizeHttpRequests((auth) -> auth.requestMatchers("/css/**", "/js/**").permitAll()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/css/**", "/js/**").permitAll()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/books/**").authenticated()
                         .requestMatchers("/users/**").permitAll()
                 )
-                .logout((logout) -> logout.logoutUrl("/users/logout")
-                        .logoutSuccessUrl("/users/login")
+                .logout(logout -> logout.logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .permitAll()
                 )
-                .formLogin(/*(formLogin) -> formLogin.loginPage("/users/login")
-                        .loginProcessingUrl("/users/login")
+                .formLogin(formLogin -> formLogin.loginPage("/login")
+                        .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/books")
-                        .permitAll()*/
-                ).and().build();
+                        .permitAll()
+                ).build();
     }
 
     @Bean
