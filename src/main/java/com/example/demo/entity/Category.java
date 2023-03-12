@@ -16,11 +16,11 @@ public class Category {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", length = 50)
+    @Column(name = "name", length = 50, nullable = false)
     @Size(max = 50, message = "Name must be less than 50 characters")
-    @NotNull(message = "Name must not be null")
+    @NotNull(message = "Name is required")
     private String name;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Book> books = new ArrayList<>();
 }

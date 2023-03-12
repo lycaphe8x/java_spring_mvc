@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <th:block th:replace="~{layout :: link-css}"></th:block>
@@ -11,26 +11,27 @@
     <h1>Add Book</h1>
     <form th:action="@{/books/add}" th:object="${book}" method="post">
         <div class="col-6 mb-3">
-            <label class="form-label" for="id">Id:</label>
-            <input class="form-control" type="text" th:field="*{id}" id="id">
-        </div>
-        <div class="col-6 mb-3">
-            <label class="form-label" for="title">Title:</label>
-            <input class="form-control" type="text" th:field="*{title}" id="title">
+            <label class="form-label" for="title">Title:</label><span class="required">*</span>
+            <input class="form-control" required type="text" th:field="*{title}" id="title">
+            <span class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
         </div>
         <div class="col-6 mb-3">
             <label class="form-label" for="author">Author:</label>
             <input class="form-control" type="text" th:field="*{author}" id="author">
         </div>
         <div class="col-6 mb-3">
-            <label class="form-label" for="price">Price:</label>
-            <input class="form-control" type="text" th:field="*{price}" id="price">
+            <label class="form-label" for="price">Price:</label><span class="required">*</span>
+            <input class="form-control" required type="text" th:field="*{price}" id="price">
+            <span class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
         </div>
         <div class="col-6 mb-3">
             <label class="form-label" for="category">Category:</label>
-            <select class="form-select" th:field="*{category}" id="category">
-                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+            <select class="form-control" id="category" name="category.id">
+                <option value="">-- Select Category --</option>
+                <option th:each="category : ${categories}" th:value="${category.id}"
+                        th:text="${category.name}"></option>
             </select>
+            <span class="text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>
         </div>
         <input type="submit" class="btn btn-primary" value="Save">
     </form>

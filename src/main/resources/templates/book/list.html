@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="UTF-8">
   <title>My Book List</title>
-  <th:block th:replace="layout :: link-css"></th:block>
+  <th:block th:replace="~{layout :: link-css}"></th:block>
 </head>
 <body>
-<th:block th:replace="layout :: header"></th:block>
+<th:block th:replace="~{layout :: header}"></th:block>
 <div class="container">
-  <table id="myTable" class="table display">
-    <thead>
+  <table class="table">
     <tr>
       <th>ID</th>
       <th>Title</th>
@@ -18,20 +17,18 @@
       <th>Category</th>
       <th>Action</th>
     </tr>
-    </thead>
-    <tbody>
     <tr th:each="book : ${books}">
-      <td th:text="${book[0]}"></td>
-      <td th:text="${book[1]}"></td>
-      <td th:text="${book[2]}"></td>
-      <td th:text="${book[3]}"></td>
-      <td th:text="${book[4] == null ? 'N/A' : book[4]}"></td>
+      <td th:text="${book.id}"></td>
+      <td th:text="${book.title}"></td>
+      <td th:text="${book.author}"></td>
+      <td th:text="${book.price}"></td>
+      <td th:text="${book.category.name}"></td>
       <td>
-        <a th:href="@{/books/edit(id=__${book[0]}__)}">Edit</a>
-        <a th:href="@{/books/delete(id=__${book[0]}__)}"
+        <a th:href="@{/books/edit(id=__${book.id}__)}">Edit</a> |
+        <a th:href="@{/books/delete(id=__${book.id}__)}"
            onclick="return confirm('Are you sure?')">Delete</a>
       </td>
-    </tbody>
+    </tr>
   </table>
 </div>
 

@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.validator.annotation.ValidRoleId;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -15,25 +16,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", length = 50)
+    @Column(name = "username", length = 50, nullable = false, unique = true)
     @NotNull(message = "Username must not be null")
     @Size(max = 50, message = "Username must be less than 50 characters")
     private String username;
 
-    @Column(name = "password", length = 250)
+    @Column(name = "password", length = 250, nullable = false)
     @NotNull(message = "Password must not be null")
     private String password;
-
-    @Column(name = "isLocked"
-            , columnDefinition = "bit default 0")
-    private boolean isLocked;
 
     @ManyToMany
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ValidRoleId
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Book> books = new ArrayList<>();
 }

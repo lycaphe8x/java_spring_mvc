@@ -1,7 +1,11 @@
 package com.example.demo.entity;
 
+import com.example.demo.validator.annotation.ValidUserId;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,12 +17,17 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", length = 50)
+
+    @Size(max = 50, message = "Name must be less than 50 characters")
+    @NotNull(message = "Name is required")
+    @Column(name = "name", length = 50, nullable = false)
     private String name;
 
+    @Size(max = 250, message = "Description must be less than 250 characters")
     @Column(name = "description", length = 250)
     private String description;
 
     @ManyToMany(mappedBy = "roles")
+    @ValidUserId
     private Set<User> users = new HashSet<>();
 }

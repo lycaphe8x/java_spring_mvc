@@ -18,6 +18,7 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
     @GetMapping("/login")
     public String login() {
         return "user/login";

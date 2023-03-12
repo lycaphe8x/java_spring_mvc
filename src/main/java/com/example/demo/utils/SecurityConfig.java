@@ -23,6 +23,11 @@ public class SecurityConfig {
     }
 
     @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(userDetailsService());
@@ -33,8 +38,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
-                .authorizeHttpRequests(auth -> auth.requestMatchers( "/css/**", "/js/**", "/", "/register").permitAll()
-                        .anyRequest().permitAll()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers( "/css/**", "/js/**", "/", "/register", "/error").permitAll()
                         .requestMatchers("/books/**").authenticated()
                 )
                 .logout(logout -> logout.logoutUrl("/logout")
@@ -48,10 +53,5 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/books")
                         .permitAll()
                 ).build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }
