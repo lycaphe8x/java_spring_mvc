@@ -24,9 +24,9 @@
       <td th:text="${book.price}"></td>
       <td th:text="${book.category.name}"></td>
       <td>
-        <a th:href="@{/books/edit(id=__${book.id}__)}">Edit</a> |
+        <a th:href="@{/books/edit(id=__${book.id}__)}" class="text-info">Edit</a> |
         <a th:href="@{/books/delete(id=__${book.id}__)}"
-           onclick="return confirm('Are you sure?')">Delete</a>
+           onclick="return confirm('Are you sure?')" class="text-danger">Delete</a>
       </td>
     </tr>
   </table>

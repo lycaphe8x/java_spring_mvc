@@ -8,7 +8,8 @@ import jakarta.validation.ConstraintValidatorContext;
 public class ValidUserIdValidator implements ConstraintValidator<ValidUserId, User> {
     @Override
     public boolean isValid(User user, ConstraintValidatorContext context) {
-        return user != null && user.getId() != null;
+        if (user == null)
+            return true;
+        return user.getId() != null;
     }
 }
-

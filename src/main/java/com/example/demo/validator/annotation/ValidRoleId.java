@@ -17,8 +17,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = ValidRoleIdValidator.class)
 @Documented
 public @interface ValidRoleId {
-
-        String message() default "Invalid Role ID";
-        Class<?>[] groups() default {};
-        Class<? extends Payload>[] payload() default {};
+    String message() default "Invalid Role ID";
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default {};
 }

@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Book;
-import com.example.demo.entity.Category;
 import com.example.demo.services.BookService;
 import com.example.demo.services.CategoryService;
 import jakarta.validation.Valid;
@@ -9,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -43,21 +42,32 @@ public class BookController {
         return "redirect:/books";
     }
 
-    @PostMapping("/add")
-    public String addBook(@Valid @ModelAttribute("book") Book book, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            List<FieldError> errors = bindingResult.getFieldErrors();
-            for (FieldError error : errors) {
-                model.addAttribute(error.getField() + "_error", error.getDefaultMessage());
-            }
-            List<Category> categories = categoryService.getAllCategories();
-            model.addAttribute("categories", categories);
-            return "book/add";
-        }
-        bookService.addBook(book);
-        return "redirect:/books";
+    @GetMapping("/edit")
+    public String editBook(@RequestParam("id") Long id, Model model) {
+        Book book = bookService.getBookById(id);
+        model.addAttribute("book", book);
+        model.addAttribute("categories", categoryService.getAllCategories());
+        return "book/edit";
     }
 
+    @PostMapping("/save")
+    public String saveBook(@Valid @ModelAttribute("book") Book book,
+                           BindingResult bindingResult,
+                           Model model,
+                           RedirectAttributes redirectAttributes) {
+        String viewName = "book/add";
+        if (book.getId() != null)
+            viewName = "book/edit";
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("pageTitle", (book.getId() != null) ? "Edit Book" : "Add Book");
+            return viewName;
+        }
+
+        bookService.addBook(book);
+        redirectAttributes.addFlashAttribute("message", "The book was saved successfully.");
+        return "redirect:/books";
+    }
 }
 
 

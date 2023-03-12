@@ -1,6 +1,5 @@
 package com.example.demo.entity;
 
-import com.example.demo.validator.annotation.ValidUserId;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -28,6 +27,5 @@ public class Role {
     private String description;
 
     @ManyToMany(mappedBy = "roles")
-    @ValidUserId
     private Set<User> users = new HashSet<>();
 }
