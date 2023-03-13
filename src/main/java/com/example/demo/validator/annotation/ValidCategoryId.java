@@ -1,5 +1,6 @@
-package com.example.demo.utils;
+package com.example.demo.validator.annotation;
 
+import com.example.demo.validator.ValidCategoryIdValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import java.lang.annotation.Documented;

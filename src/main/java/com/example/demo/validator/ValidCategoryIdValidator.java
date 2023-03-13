@@ -1,7 +1,7 @@
-package com.example.demo.utils;
+package com.example.demo.validator;
 
-import com.example.demo.entity.Book;
 import com.example.demo.entity.Category;
+import com.example.demo.validator.annotation.ValidCategoryId;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

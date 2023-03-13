@@ -1,8 +1,7 @@
 package com.example.demo.entity;
 
-import com.example.demo.utils.ValidCategoryId;
+import com.example.demo.validator.annotation.ValidCategoryId;
 import jakarta.persistence.*;
-
 import jakarta.validation.constraints.*;
 import lombok.Data;
 @Data
