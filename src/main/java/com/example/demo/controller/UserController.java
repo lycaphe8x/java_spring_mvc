@@ -30,14 +30,6 @@ public class UserController {
         model.addAttribute("user", new User());
         return "user/register";
     }
-
-    @GetMapping("/authorize")
-    public String authorize(Model model) {
-        List<User> users = userService.getAllUsers();
-        model.addAttribute("users", users);
-        return "user/authorize";
-    }
-
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
