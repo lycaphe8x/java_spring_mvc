@@ -45,7 +45,7 @@ public class BookController {
     }
 
     @GetMapping(value = "/delete", params = "id")
-    public String deleteBook(@RequestParam("id") Long id) {
+    public String deleteBook(@RequestParam("id") Long id){
         bookService.deleteBook(id);
         return "redirect:/books";
     }
@@ -69,5 +69,3 @@ public class BookController {
         return "redirect:/books";
     }
 }
-
-

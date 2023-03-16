@@ -4,11 +4,6 @@
     <meta charset="UTF-8">
     <th:block th:replace="~{layout :: link-css}"></th:block>
     <title>Add Book</title>
-    <style>
-        .required {
-            color: red;
-        }
-    </style>
 </head>
 <body>
 <th:block th:replace="~{layout :: header}"></th:block>
@@ -16,7 +11,7 @@
     <h1>Add Book</h1>
     <form th:action="@{/books/save}" th:object="${book}" method="post">
         <div class="col-6 mb-3">
-            <label class="form-label" for="title">Title:</label><span class="required">*</span>
+            <label class="form-label" for="title">Title:</label><span class="text-danger">*</span>
             <input class="form-control" required type="text" th:field="*{title}" id="title">
             <span class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
         </div>
@@ -25,12 +20,12 @@
             <input class="form-control" type="text" th:field="*{author}" id="author">
         </div>
         <div class="col-6 mb-3">
-            <label class="form-label" for="price">Price:</label><span class="required">*</span>
+            <label class="form-label" for="price">Price:</label><span class="text-danger">*</span>
             <input class="form-control" required type="text" th:field="*{price}" id="price">
             <span class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
         </div>
         <div class="col-6 mb-3">
-            <label class="form-label" for="category">Category:</label>
+            <label class="form-label" for="category">Category:</label><span class="text-danger">*</span>
             <select class="form-control" id="category" name="category.id">
                 <option value="">-- Select Category --</option>
                 <option th:each="category : ${categories}" th:value="${category.id}"
