@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.validator.annotation.ValidUsername;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -21,6 +22,7 @@ public class User {
     @Column(name = "username", length = 50, nullable = false, unique = true)
     @NotBlank(message = "Username is required")
     @Size(max = 50, message = "Username must be less than 50 characters")
+    @ValidUsername
     private String username;
 
     @Column(name = "password", length = 250, nullable = false)

@@ -30,6 +30,7 @@ public class UserController {
         model.addAttribute("user", new User());
         return "user/register";
     }
+
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -39,9 +40,9 @@ public class UserController {
             }
             return "user/register";
         }
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userService.save(user);
         return "redirect:/login";
     }
 }
+
