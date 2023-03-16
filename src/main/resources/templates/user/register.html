@@ -20,6 +20,16 @@
       <h3 class="card-title text-center">Sign Up</h3>
       <form th:action="@{/register}" th:object="${user}" method="post">
         <div class="mb-3">
+          <label for="name" class="form-label">First Name:</label><span class="required">*</span>
+          <input type="text" class="form-control" th:field="*{name}" id="name">
+          <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" class="form-control" th:field="*{email}" id="email">
+          <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        </div>
+        <div class="mb-3">
           <label for="username" class="form-label">Username:</label><span class="required">*</span>
           <input type="text" class="form-control" id="username" th:field="*{username}">
           <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>

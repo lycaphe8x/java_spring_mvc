@@ -1,6 +1,6 @@
 package com.example.demo.services;
 
-import com.example.demo.controller.CustomUserDetail;
+import com.example.demo.entity.CustomUserDetail;
 import com.example.demo.entity.User;
 import com.example.demo.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

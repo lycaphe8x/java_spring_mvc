@@ -59,6 +59,9 @@ public class SecurityConfig {
                         .tokenValiditySeconds(86400)
                         .userDetailsService(userDetailsService())
                 )
+                .exceptionHandling(exceptionHandling ->
+                        exceptionHandling.accessDeniedPage("/403"))
                 .build();
     }
 }
+

@@ -24,6 +24,15 @@ public class User {
     @NotNull(message = "Password must not be null")
     private String password;
 
+    @Column(name = "email", length = 50)
+    @Size(max = 50, message = "Email must be less than 50 characters")
+    private String email;
+
+    @Column(name = "name", length = 50, nullable = false)
+    @Size(max = 50, message = "Your name must be less than 50 characters")
+    @NotNull(message = "Your name must not be null")
+    private String name;
+
     @ManyToMany
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -33,3 +42,4 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Book> books = new ArrayList<>();
 }
+
