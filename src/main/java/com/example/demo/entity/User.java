@@ -1,11 +1,14 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import jakarta.validation.constraints.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -16,12 +19,12 @@ public class User {
     private Long id;
 
     @Column(name = "username", length = 50, nullable = false, unique = true)
-    @NotNull(message = "Username must not be null")
+    @NotBlank(message = "Username is required")
     @Size(max = 50, message = "Username must be less than 50 characters")
     private String username;
 
     @Column(name = "password", length = 250, nullable = false)
-    @NotNull(message = "Password must not be null")
+    @NotBlank(message = "Password is required")
     private String password;
 
     @Column(name = "email", length = 50)
@@ -30,7 +33,7 @@ public class User {
 
     @Column(name = "name", length = 50, nullable = false)
     @Size(max = 50, message = "Your name must be less than 50 characters")
-    @NotNull(message = "Your name must not be null")
+    @NotBlank(message = "Your name is required")
     private String name;
 
     @ManyToMany

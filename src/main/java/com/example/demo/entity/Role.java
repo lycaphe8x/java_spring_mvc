@@ -1,7 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -18,7 +18,7 @@ public class Role {
 
 
     @Size(max = 50, message = "Name must be less than 50 characters")
-    @NotNull(message = "Name is required")
+    @NotBlank(message = "Name is required")
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
