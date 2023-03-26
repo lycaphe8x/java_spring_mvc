@@ -18,7 +18,7 @@
       <th>Author</th>
       <th>Price</th>
       <th>Category</th>
-      <th sec:authorize="hasAnyAuthority('AD')">Action</th>
+      <th sec:authorize="hasAnyAuthority('ADMIN')">Action</th>
     </tr>
     <tr th:each="book : ${books}">
       <td th:text="${book.id}"></td>
@@ -26,7 +26,7 @@
       <td th:text="${book.author}"></td>
       <td th:text="${book.price}"></td>
       <td th:text="${book.category != null ? book.category.name : 'N/A'}"></td>
-      <td sec:authorize="hasAnyAuthority('AD')">
+      <td sec:authorize="hasAnyAuthority('ADMIN')">
           <a th:href="@{/books/edit(id=__${book.id}__)}" class="text-info">Edit</a> |
           <a th:href="@{/books/delete(id=__${book.id}__)}"
              onclick="deleteBook(this); return false;" class="text-danger">Delete</a>
