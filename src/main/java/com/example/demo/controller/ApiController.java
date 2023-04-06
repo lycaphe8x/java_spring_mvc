@@ -1,11 +1,14 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Book;
+import com.example.demo.dto.BookDto;
 import com.example.demo.services.BookService;
+import com.example.demo.services.CategoryService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -15,20 +18,35 @@ public class ApiController {
     @Autowired
     private BookService bookService;
 
+    @Autowired
+    private CategoryService categoryService;
+
+    private BookDto convertToBookDto(Book book) {
+        BookDto bookDTO = new BookDto();
+        bookDTO.setId(book.getId());
+        bookDTO.setTitle(book.getTitle());
+        bookDTO.setAuthor(book.getAuthor());
+        bookDTO.setPrice(book.getPrice());
+        bookDTO.setCategoryName(categoryService.getCategoryById(book.getCategory().getId()).getName());
+        return bookDTO;
+    }
+
     @GetMapping
-    public List<Book> getAllBooks() {
-        return bookService.getAllBooks();
+    @ResponseBody
+    public List<BookDto> getAllBooks() {
+        List<Book> books = bookService.getAllBooks();
+        List<BookDto> bookDTOs = new ArrayList<>();
+        for (Book book : books) {
+            bookDTOs.add(convertToBookDto(book));
+        }
+        return bookDTOs;
     }
 
     @GetMapping("/{id}")
-    public Book getBookById(@PathVariable Long id) {
-        return bookService.getBookById(id);
-    }
-
-    @PostMapping
-    @Transactional
-    public void addBook(@RequestBody Book book) {
-        bookService.addBook(book);
+    @ResponseBody
+    public BookDto getBookById(@PathVariable Long id) {
+        Book book = bookService.getBookById(id);
+        return convertToBookDto(book);
     }
 
     @DeleteMapping("/{id}")
@@ -36,12 +54,5 @@ public class ApiController {
     public void deleteBook(@PathVariable Long id) {
         if (bookService.getBookById(id) != null)
             bookService.deleteBook(id);
-    }
-
-    @PutMapping()
-    @Transactional
-    public void updateBook(@RequestBody Book book) {
-        if (bookService.getBookById(book.getId()) != null)
-            bookService.updateBook(book);
     }
 }

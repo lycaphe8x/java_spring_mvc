@@ -16,7 +16,6 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Size(max = 50, message = "Name must be less than 50 characters")
     @NotBlank(message = "Name is required")
     @Column(name = "name", length = 50, nullable = false)

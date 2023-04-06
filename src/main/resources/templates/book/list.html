@@ -20,38 +20,13 @@
       <th>Category</th>
       <th sec:authorize="hasAnyAuthority('ADMIN')">Action</th>
     </tr>
-    <tr th:each="book : ${books}">
-      <td th:text="${book.id}"></td>
-      <td th:text="${book.title}"></td>
-      <td th:text="${book.author}"></td>
-      <td th:text="${book.price}"></td>
-      <td th:text="${book.category != null ? book.category.name : 'N/A'}"></td>
-      <td sec:authorize="hasAnyAuthority('ADMIN')">
-          <a th:href="@{/books/edit(id=__${book.id}__)}" class="text-info">Edit</a> |
-          <a th:href="@{/books/delete(id=__${book.id}__)}"
-             onclick="deleteBook(this); return false;" class="text-danger">Delete</a>
-      </td>
-    </tr>
+    <tbody id="book-table-body">
+    </tbody>
   </table>
 </div>
-<script th:src="@{/js/jquery-3.5.1.min.js}"></script>
-<script th:inline="javascript">
-    function deleteBook(link) {
-        if (confirm('Are you sure?')) {
-        $.ajax({
-            url: $(link).attr('href'),
-            type: 'DELETE',
-            success: result => {
-              if (!result.success) {
-                alert(result.message);
-              } else {
-                $(link).parent().parent().remove();
-              }
-            }
-        });
-        }
-    }
-</script>
+<script th:src="@{/js/jquery-3.6.4.min.js}"></script>
+<script th:src="@{/js/list.js}"></script>
 <th:block th:replace="~{layout :: footer}"></th:block>
 </body>
 </html>
+
