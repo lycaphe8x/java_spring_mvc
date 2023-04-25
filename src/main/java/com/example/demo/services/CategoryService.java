@@ -18,8 +18,7 @@ public class CategoryService {
     }
 
     public Category getCategoryById(Long id) {
-        Optional<Category> optionalCategory = categoryRepository.findById(id);
-        return optionalCategory.orElse(null);
+        return categoryRepository.findById(id).orElse(null);
     }
 
     public Category saveCategory(Category category) {

@@ -1,14 +1,13 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Book;
 import com.example.demo.dto.BookDto;
+import com.example.demo.entity.Book;
 import com.example.demo.services.BookService;
 import com.example.demo.services.CategoryService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,12 +33,9 @@ public class ApiController {
     @GetMapping
     @ResponseBody
     public List<BookDto> getAllBooks() {
-        List<Book> books = bookService.getAllBooks();
-        List<BookDto> bookDTOs = new ArrayList<>();
-        for (Book book : books) {
-            bookDTOs.add(convertToBookDto(book));
-        }
-        return bookDTOs;
+        return bookService.getAllBooks().stream()
+                .map(this::convertToBookDto)
+                .toList();
     }
 
     @GetMapping("/{id}")
