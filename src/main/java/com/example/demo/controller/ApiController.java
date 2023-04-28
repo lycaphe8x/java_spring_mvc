@@ -41,8 +41,7 @@ public class ApiController {
     @GetMapping("/{id}")
     @ResponseBody
     public BookDto getBookById(@PathVariable Long id) {
-        Book book = bookService.getBookById(id);
-        return convertToBookDto(book);
+        return convertToBookDto(bookService.getBookById(id));
     }
 
     @DeleteMapping("/{id}")
@@ -52,3 +51,4 @@ public class ApiController {
             bookService.deleteBook(id);
     }
 }
+
