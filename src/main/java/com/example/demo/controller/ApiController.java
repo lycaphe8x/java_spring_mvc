@@ -21,13 +21,12 @@ public class ApiController {
     private CategoryService categoryService;
 
     private BookDto convertToBookDto(Book book) {
-        BookDto bookDTO = new BookDto();
-        bookDTO.setId(book.getId());
-        bookDTO.setTitle(book.getTitle());
-        bookDTO.setAuthor(book.getAuthor());
-        bookDTO.setPrice(book.getPrice());
-        bookDTO.setCategoryName(categoryService.getCategoryById(book.getCategory().getId()).getName());
-        return bookDTO;
+        return new BookDto(
+                book.getId(),
+                book.getTitle(),
+                book.getAuthor(),
+                book.getPrice(),
+                categoryService.getCategoryById(book.getCategory().getId()).getName());
     }
 
     @GetMapping
