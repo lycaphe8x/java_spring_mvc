@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import com.example.demo.validator.annotation.ValidUsername;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -31,6 +32,7 @@ public class User {
 
     @Column(name = "email", length = 50)
     @Size(max = 50, message = "Email must be less than 50 characters")
+    @Email(message = "Email should be valid")
     private String email;
 
     @Column(name = "name", length = 50, nullable = false)

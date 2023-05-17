@@ -20,9 +20,8 @@ public class UserService {
         Long userId = userRepository.getUserIdByUsername(user.getUsername());
         Long roleId = roleRepository.getRoleIdByName("USER");
 
-        if (roleId != 0 && userId != 0) {
+        if (roleId != 0 && userId != 0)
             userRepository.addRoleToUser(userId, roleId);
-        }
     }
 }
 

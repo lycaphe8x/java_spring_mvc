@@ -14,7 +14,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", length = 50)
+    @Column(name = "title")
     @Size(max = 50, message = "Title must be less than 50 characters")
     @NotNull(message = "Title must not be null")
     private String title;
