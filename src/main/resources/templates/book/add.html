@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <th:block th:replace="layout :: link-css"></th:block>
+    <th:block th:replace="~{layout :: link-css}"></th:block>
     <title>Add Book</title>
 </head>
 <body>
-<th:block th:replace="layout :: header"></th:block>
+<th:block th:replace="~{layout :: header}"></th:block>
 <div class="container">
     <h1>Add Book</h1>
     <form th:action="@{/books/add}" th:object="${book}" method="post">
@@ -22,22 +22,16 @@
         <div class="col-6 mb-3">
             <label class="form-label" for="price">Price:</label>
             <input class="form-control" type="text" th:field="*{price}" id="price">
-            <span class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
         </div>
         <div class="col-6 mb-3">
             <label class="form-label" for="category">Category:</label>
-            <select class="form-control" id="category" name="category.id">
-                <option value="">-- Select Category --</option>
-                <option th:each="category : ${categories}" th:value="${category.id}"
-                        th:text="${category.name}"></option>
-            </select>
-            <span class="text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>
+            <input class="form-control" type="text" th:field="*{category}" id="category">
         </div>
         <input type="submit" class="btn btn-primary" value="Save">
     </form>
     <br>
     <a th:href="@{/books}">Back to List</a>
 </div>
-<th:block th:replace="layout :: footer"></th:block>
+<th:block th:replace="~{layout :: footer}"></th:block>
 </body>
 </html>
