@@ -30,9 +30,8 @@ public class BookController {
 
     @PostMapping("/add")
     public String addBook(@ModelAttribute("book") Book book) {
-        if(bookService.getBookById(book.getId()).isPresent())
-            return "redirect:/books";
-        bookService.addBook(book);
+        if(bookService.getBookById(book.getId()).isEmpty())
+            bookService.addBook(book);
         return "redirect:/books";
     }
 
