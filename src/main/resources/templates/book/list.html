@@ -46,6 +46,14 @@
           <a class="btn btn-primary" th:href="@{/books/edit/{id}(id=${book.getId()})}">Edit</a>
           <a class="btn btn-danger" th:href="@{/books/delete/{id}(id=${book.getId()})}"
            onclick="return confirm('Are you sure you want to delete this book?')">Delete</a>
+          <form th:action="@{/books/add-to-cart}" method="post" class="d-inline">
+            <input type="hidden" name="id" th:value="${book.getId()}">
+            <input type="hidden" name="name" th:value="${book.getTitle()}">
+            <input type="hidden" name="price" th:value="${book.getPrice()}">
+            <button type="submit" class="btn btn-success"
+                    onclick="return confirm('Are you sure you want to add this book to cart?')">
+              Add to cart</button>
+            </form>
         </td>
       </tr>
     </tbody>
@@ -58,7 +66,6 @@
     </li>
   </ul>
 </nav>
-
 <th:block th:replace="~{layout::footer}"></th:block>
 </body>
 </html>

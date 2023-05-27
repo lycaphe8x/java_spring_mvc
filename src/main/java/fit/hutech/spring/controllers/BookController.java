@@ -1,8 +1,11 @@
 package fit.hutech.spring.controllers;
 
 import fit.hutech.spring.entities.Book;
+import fit.hutech.spring.entities.Item;
 import fit.hutech.spring.services.BookService;
+import fit.hutech.spring.services.CartService;
 import fit.hutech.spring.services.CategoryService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,8 @@ public class BookController {
     private final BookService bookService;
 
     private final CategoryService categoryService;
+
+    private final CartService cartService;
 
     @GetMapping
     public String showAllBooks(@NotNull Model model,
@@ -106,4 +111,17 @@ public class BookController {
         model.addAttribute("categories", categoryService.getAllCategories());
         return "book/list";
     }
+
+    @PostMapping("/add-to-cart")
+    public String addToCart(HttpSession session,
+                            @RequestParam long id,
+                            @RequestParam String name,
+                            @RequestParam double price,
+                            @RequestParam(defaultValue = "1") int quantity) {
+        var cart = cartService.getCart(session);
+        cart.addItems(new Item(id, name, price, quantity));
+        cartService.updateCart(session, cart);
+        return "redirect:/books";
+    }
+
 }

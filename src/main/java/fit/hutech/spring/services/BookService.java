@@ -4,8 +4,6 @@ import fit.hutech.spring.entities.Book;
 import fit.hutech.spring.repositories.IBookRepository;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +19,11 @@ public class BookService {
     private final IBookRepository bookRepository;
 
     public List<Book> getAllBooks(Integer pageNo, Integer pageSize, String sortBy) {
-        return bookRepository.findAll(PageRequest.of(pageNo, pageSize, Sort.by(sortBy)))
-                    .getContent();
+        return bookRepository.findAllBooks(pageNo, pageSize, sortBy);
+    }
+
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
     }
 
     public Book getBookById(Long id) {
