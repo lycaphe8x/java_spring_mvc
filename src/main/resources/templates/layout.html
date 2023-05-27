@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-        lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My App</title>
   <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <link th:fragment="custom-css" rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
+<body class="d-flex flex-column h-100">
 <header th:fragment="header">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
@@ -24,25 +26,41 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Home</a>
           </li>
-          <li class="nav-item"><a class="nav-link" href="/books">List Book</a></li>
-          <li class="nav-item"><a class="nav-link" href="/books/add">Add Book</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="/books">
+              List Book
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/books/add">
+              Add Book
+            </a>
+          </li>
           <li sec:authorize="isAuthenticated()">
             <form th:action="@{/logout}" method="post">
               <button class="btn btn-outline-danger" type="submit">Logout</button>
             </form>
           </li>
           <li sec:authorize="!isAuthenticated()">
-            <a class="btn btn-outline-primary" href="/login">Login</a>
+            <a class="btn btn-outline-primary" href="/login">
+              Login
+            </a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 </header>
-
-<footer th:fragment="footer">
+<div class="container">
+  <div th:fragment="content"></div>
+</div>
+<footer th:fragment="footer" class="footer mt-auto py-3 bg-light">
+  <div class="container text-center">Copyright &copy;
+    <span th:text="${#dates.year(#dates.createNow())}"></span>
+    <a href="https://www.hutech.edu.vn/">HUTECH Education</a>
+  </div>
   <script th:src="@{/js/bootstrap.min.js}"></script>
+  <script th:src="@{/js/jquery-3.7.0.min.js}"></script>
 </footer>
 </body>
 </html>
-

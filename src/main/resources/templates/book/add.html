@@ -1,43 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <th:block th:replace="~{layout :: link-css}"></th:block>
-    <title>Add Book</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <th:block th:replace="~{layout::link-css}"></th:block>
+  <th:block th:replace="~{layout::custom-css}"></th:block>
+  <title>Add Book</title>
 </head>
 <body>
-<th:block th:replace="~{layout :: header}"></th:block>
+<th:block th:replace="~{layout::header}"></th:block>
 <div class="container">
-    <h1>Add Book</h1>
-    <form th:action="@{/books/save}" th:object="${book}" method="post">
-        <div class="col-6 mb-3">
-            <label class="form-label" for="title">Title:</label><span class="text-danger">*</span>
-            <input class="form-control" required type="text" th:field="*{title}" id="title">
-            <span class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
-        </div>
-        <div class="col-6 mb-3">
-            <label class="form-label" for="author">Author:</label>
-            <input class="form-control" type="text" th:field="*{author}" id="author">
-        </div>
-        <div class="col-6 mb-3">
-            <label class="form-label" for="price">Price:</label><span class="text-danger">*</span>
-            <input class="form-control" required type="text" th:field="*{price}" id="price">
-            <span class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
-        </div>
-        <div class="col-6 mb-3">
-            <label class="form-label" for="category">Category:</label><span class="text-danger">*</span>
-            <select class="form-control" id="category" name="category.id">
-                <option value="">-- Select Category --</option>
-                <option th:each="category : ${categories}" th:value="${category.id}"
-                        th:text="${category.name}"></option>
-            </select>
-            <span class="text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>
-        </div>
-        <input type="submit" class="btn btn-primary" value="Save">
-    </form>
-    <br>
-    <a th:href="@{/books}">Back to List</a>
+  <h1>Add Book</h1>
+  <form th:action="@{/books/add}" th:object="${book}" method="post">
+    <div class="col-6 mb-3">
+      <label class="form-label" for="title">Title:</label><span class="text-danger">*</span>
+      <input class="form-control" type="text" placeholder="Enter title" th:field="*{title}" id="title" required autofocus >
+      <span class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+    </div>
+    <div class="col-6 mb-3">
+      <label class="form-label" for="author">Author:</label>
+      <input class="form-control" type="text" th:field="*{author}" id="author" placeholder="Enter author">
+      <span class="text-danger" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
+    </div>
+    <div class="col-6 mb-3">
+      <label class="form-label" for="price">Price:</label><span class="text-danger">*</span>
+      <input class="form-control" required type="text" th:field="*{price}" id="price" placeholder="Enter price">
+      <span class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+    </div>
+    <div class="col-6 mb-3">
+      <label class="form-label" for="category">Category:</label><span class="text-danger">*</span>
+      <select class="form-control" id="category" name="category.id">
+        <option value="">-- Select Category --</option>
+        <option th:each="category : ${categories}" th:value="${category.getId()}"
+                th:text="${category.getName()}"></option>
+      </select>
+      <span class="text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Save" />
+  </form>
+  <br>
+  <a th:href="@{/books}">Back to List</a>
 </div>
-<th:block th:replace="~{layout :: footer}"></th:block>
+<th:block th:replace="~{layout::footer}"></th:block>
 </body>
 </html>

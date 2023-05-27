@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Project exclude paths
+/src/main/resources/static/css/
+/src/main/resources/templates/home/
