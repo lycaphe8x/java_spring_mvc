@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.Hibernate;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -40,6 +42,10 @@ public class Book {
     @ValidCategoryId
     @ToString.Exclude
     private Category category;
+
+    @OneToMany(mappedBy = "book")
+    @ToString.Exclude
+    private List<ItemInvoice> itemInvoices = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

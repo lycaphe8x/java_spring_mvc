@@ -1,7 +1,7 @@
 package fit.hutech.spring.controllers;
 
 import fit.hutech.spring.entities.Book;
-import fit.hutech.spring.entities.Item;
+import fit.hutech.spring.daos.Item;
 import fit.hutech.spring.services.BookService;
 import fit.hutech.spring.services.CartService;
 import fit.hutech.spring.services.CategoryService;
@@ -65,7 +65,7 @@ public class BookController {
     @GetMapping("/edit/{id}")
     public String editBookForm(@NotNull Model model, @PathVariable long id) {
         var book = bookService.getBookById(id);
-        model.addAttribute("book", book != null ? book : new Book());
+        model.addAttribute("book", book.orElseThrow(() -> new IllegalArgumentException("Book not found")));
         model.addAttribute("categories", categoryService.getAllCategories());
         return "book/edit";
     }
@@ -89,10 +89,11 @@ public class BookController {
 
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable long id) {
-        if (bookService.getBookById(id) != null)
-            bookService.deleteBookById(id);
-        else
-            throw new IllegalArgumentException("Book not found");
+        bookService.getBookById(id)
+                .ifPresentOrElse(
+                        book -> bookService.deleteBookById(id),
+                        () -> { throw new IllegalArgumentException("Book not found"); }
+                );
         return "redirect:/books";
     }
 
@@ -123,5 +124,4 @@ public class BookController {
         cartService.updateCart(session, cart);
         return "redirect:/books";
     }
-
 }

@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,8 +46,12 @@
         <td th:text="${book.getPrice()}"></td>
         <td th:text="${book.getCategory().getName()}"></td>
         <td colspan="2">
-          <a class="btn btn-primary" th:href="@{/books/edit/{id}(id=${book.getId()})}">Edit</a>
-          <a class="btn btn-danger" th:href="@{/books/delete/{id}(id=${book.getId()})}"
+          <a class="btn btn-primary"
+             sec:authorize="hasAnyAuthority('ADMIN')"
+             th:href="@{/books/edit/{id}(id=${book.getId()})}">Edit</a>
+          <a class="btn btn-danger"
+             sec:authorize="hasAnyAuthority('ADMIN')"
+             th:href="@{/books/delete/{id}(id=${book.getId()})}"
            onclick="return confirm('Are you sure you want to delete this book?')">Delete</a>
           <form th:action="@{/books/add-to-cart}" method="post" class="d-inline">
             <input type="hidden" name="id" th:value="${book.getId()}">

@@ -1,7 +1,9 @@
 package fit.hutech.spring.utils;
 
+import fit.hutech.spring.services.OAuthService;
 import fit.hutech.spring.services.UserService;
 import jakarta.validation.constraints.NotNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -11,12 +13,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final OAuthService oAuthService;
+
+    private final UserService userService;
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserService();
@@ -39,18 +48,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(@NotNull HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/css/**", "/js/**", "/", "/register", "/error")
-                                .permitAll().
-                                requestMatchers("/books/edit", "/books/delete")
-                                .permitAll()
-//                                .hasAnyAuthority("ADMIN")
-                                .requestMatchers("/books", "/books/add")
-                                .permitAll()
-//                                .hasAnyAuthority("ADMIN", "USER")
-                                .requestMatchers("/api/**")
-                                .permitAll()
-//                                .hasAnyAuthority("ADMIN", "USER")
-                                .anyRequest().permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/", "/oauth/**", "/register", "/error")
+                        .permitAll()
+                        .requestMatchers("/books/edit/**", "/books/add", "/books/delete")
+                        .hasAnyAuthority("ADMIN")
+                        .requestMatchers("/books", "/cart", "/cart/**")
+                        .hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers("/api/**")
+                        .permitAll()
+                        .anyRequest().authenticated()
                 ).logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login")
@@ -62,8 +68,25 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/")
+                        .failureUrl("/login?error")
                         .permitAll()
-                ).rememberMe(rememberMe -> rememberMe
+                ).oauth2Login(
+                        oauth2Login -> oauth2Login
+                                .loginPage("/login")
+                                .failureUrl("/login?error")
+                                .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
+                                        .userService(oAuthService)
+                                )
+                                .successHandler(
+                                        (request, response, authentication) -> {
+                                            var oidcUser = (DefaultOidcUser) authentication.getPrincipal();
+                                            userService.saveOauthUser(oidcUser.getEmail(), oidcUser.getName());
+                                            response.sendRedirect("/");
+                                        }
+                                )
+                                .permitAll()
+                )
+                .rememberMe(rememberMe -> rememberMe
                         .key("hutech")
                         .rememberMeCookieName("hutech")
                         .tokenValiditySeconds(24 * 60 * 60)

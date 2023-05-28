@@ -1,12 +1,14 @@
 package fit.hutech.spring.entities;
 
-import fit.hutech.spring.validators.annotations.ValidUsername;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,13 +32,12 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", length = 50, nullable = false, unique = true)
+    @Column(name = "username", length = 50, unique = true)
     @NotBlank(message = "Username is required")
     @Size(min = 1, max = 50, message = "Username must be between 1 and 50 characters")
-    @ValidUsername
     private String username;
 
-    @Column(name = "password", length = 250, nullable = false)
+    @Column(name = "password", length = 250)
     @NotBlank(message = "Password is required")
     private String password;
 
@@ -51,11 +52,18 @@ public class User implements UserDetails {
     @Pattern(regexp = "^[0-9]*$", message = "Phone must be number")
     private String phone;
 
+    @Column(name = "provider", length = 50)
+    private String provider;
+
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private Set<Invoice> invoices = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

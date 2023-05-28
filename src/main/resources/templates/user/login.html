@@ -17,6 +17,12 @@
                 <div class="card-body p-5 text-center">
                     <h3>Login to <strong>Bookstore</strong></h3>
                     <p class="mb-4 text-secondary">Enter your username and password to access your account.</p>
+                    <a href="/oauth2/authorization/google"
+                       class="btn btn-outline-danger btn-floating m-1"
+                       role="button">
+                        Login with Google
+                    </a>
+                    <hr class="my-4">
                     <form th:action="@{/login}" method="post">
                         <div th:if="${param.error}" class="alert alert-danger">
                             Invalid username and password.

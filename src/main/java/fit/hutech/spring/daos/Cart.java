@@ -1,4 +1,4 @@
-package fit.hutech.spring.entities;
+package fit.hutech.spring.daos;
 
 import lombok.Data;
 

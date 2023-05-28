@@ -45,6 +45,12 @@ public class CartController {
     @GetMapping("/clearCart")
     public String clearCart(HttpSession session) {
         cartService.removeCart(session);
-        return "book/cart";
+        return "redirect:/cart";
+    }
+
+    @GetMapping("/checkout")
+    public String checkout(HttpSession session) {
+        cartService.saveCart(session);
+        return "redirect:/cart";
     }
 }

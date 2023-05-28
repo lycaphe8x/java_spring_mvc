@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,12 +23,8 @@ public class BookService {
         return bookRepository.findAllBooks(pageNo, pageSize, sortBy);
     }
 
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
-    }
-
-    public Book getBookById(Long id) {
-        return bookRepository.findById(id).orElse(null);
+    public Optional<Book> getBookById(Long id) {
+        return bookRepository.findById(id);
     }
 
     public void addBook(Book book) {
@@ -48,6 +45,6 @@ public class BookService {
     }
 
     public List<Book> searchBook(String keyword) {
-            return bookRepository.searchBook(keyword);
+        return bookRepository.searchBook(keyword);
     }
 }
