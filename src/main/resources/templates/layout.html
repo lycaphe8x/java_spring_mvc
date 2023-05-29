@@ -41,6 +41,11 @@
               Cart
             </a>
           </li>
+          <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
+            <a class="nav-link" href="/chat">
+              Chat
+            </a>
+          </li>
           <li sec:authorize="isAuthenticated()">
             <form th:action="@{/logout}" method="post">
               <button class="btn btn-outline-danger" type="submit">Logout</button>

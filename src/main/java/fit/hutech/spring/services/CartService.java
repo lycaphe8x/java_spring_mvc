@@ -10,8 +10,8 @@ import fit.hutech.spring.repositories.IItemInvoiceRepository;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -19,8 +19,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(isolation = Isolation.SERIALIZABLE,
-        rollbackFor = {Exception.class, Throwable.class})
+@Transactional
 public class CartService {
     private static final String CART_SESSION_KEY = "cart";
 
@@ -30,6 +29,7 @@ public class CartService {
 
     private final IBookRepository bookRepository;
 
+    @PreAuthorize("hasAnyAuthority('USER') or hasAnyAuthority('ADMIN')")
     public Cart getCart(@NotNull HttpSession session) {
         return Optional.ofNullable((Cart) session.getAttribute(CART_SESSION_KEY))
                 .orElseGet(() -> {
@@ -39,6 +39,7 @@ public class CartService {
                 });
     }
 
+    @PreAuthorize("hasAnyAuthority('USER') or hasAnyAuthority('ADMIN')")
     public void updateCart(@NotNull HttpSession session, Cart cart) {
         session.setAttribute(CART_SESSION_KEY, cart);
     }
@@ -47,18 +48,21 @@ public class CartService {
         session.removeAttribute(CART_SESSION_KEY);
     }
 
+    @PreAuthorize("hasAnyAuthority('USER') or hasAnyAuthority('ADMIN')")
     public int getSumQuantity(@NotNull HttpSession session) {
         return getCart(session).getCartItems().stream()
                 .mapToInt(Item::getQuantity)
                 .sum();
     }
 
+    @PreAuthorize("hasAnyAuthority('USER') or hasAnyAuthority('ADMIN')")
     public double getSumPrice(@NotNull HttpSession session) {
         return getCart(session).getCartItems().stream()
                 .mapToDouble(item -> item.getPrice() * item.getQuantity())
                 .sum();
     }
 
+    @PreAuthorize("hasAnyAuthority('USER') or hasAnyAuthority('ADMIN')")
     public void saveCart(@NotNull HttpSession session) {
         var cart = getCart(session);
         if (cart.getCartItems().isEmpty()) return;

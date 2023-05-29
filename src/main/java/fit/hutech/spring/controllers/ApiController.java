@@ -2,7 +2,6 @@ package fit.hutech.spring.controllers;
 
 import fit.hutech.spring.entities.Book;
 import fit.hutech.spring.services.BookService;
-import fit.hutech.spring.services.CartService;
 import fit.hutech.spring.services.CategoryService;
 import fit.hutech.spring.viewmodels.BookGetVm;
 import fit.hutech.spring.viewmodels.BookPostVm;
@@ -15,14 +14,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin(origins = "*")
+@CrossOrigin("*")
 @RequiredArgsConstructor
 public class ApiController {
     private final BookService bookService;
 
     private final CategoryService categoryService;
-
-    private final CartService cartService;
 
     @GetMapping("/books")
     public ResponseEntity<List<BookGetVm>> getAllBooks(Integer pageNo, Integer pageSize, String sortBy) {
