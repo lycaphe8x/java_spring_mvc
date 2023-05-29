@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat</title>
+  <link rel="stylesheet" th:href="@{/css/chat.css}"/>
+  <th:block th:replace="~{layout::link-css}"></th:block>
+  <th:block th:replace="~{layout::custom-css}"></th:block>
+</head>
+<body>
+<th:block th:replace="~{layout::header}"></th:block>
+
+<noscript>
+  <h2>Seems your browser doesn't support Javascript! Websocket relies on Javascript being enabled. Please enable
+    Javascript and reload this page!</h2>
+</noscript>
+
+<div id="username-page">
+  <div class="username-page-container">
+    <form id="usernameForm" name="usernameForm">
+      <div class="form-group">
+        <label for="name"></label>
+        <input type="text"
+               id="name"
+               placeholder="Enter your name..."
+               autocomplete="off"
+               class="form-control"
+               required
+               th:value="${#authentication.name}"/>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn-danger">Go</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="chat-page" class="hidden">
+  <div class="chat-container">
+    <div class="chat-header">
+      <h2>HUTECH CHAT</h2>
+    </div>
+    <ul id="messageArea"></ul>
+    <form id="messageForm" name="messageForm">
+      <div class="form-group">
+        <div class="input-group clearfix">
+          <label for="message"></label>
+          <input type="text"
+                 id="message"
+                 placeholder="Type a message..."
+                 required
+                 autocomplete="off"
+                 class="form-control"/>
+          <button type="submit" class="primary">Send</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<th:block th:replace="~{layout::footer}"></th:block>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js}"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js}"></script>
+<script th:src="@{/js/chat.js}"></script>
+</body>
+</html>
