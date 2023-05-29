@@ -15,6 +15,8 @@ import java.util.Set;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "role")
 public class Role implements GrantedAuthority {
